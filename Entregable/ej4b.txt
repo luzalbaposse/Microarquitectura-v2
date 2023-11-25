@@ -1,0 +1,44 @@
+             main |00| SET R7 , 0xFF
+                  |02| SET R0 , p
+                  |04| SET R1 , 0x10
+                  |06| CALL | R7 | , modarray
+             halt |08| JMP halt
+   modarray, loop |0a| LOAD R4 , [ R0 ]
+                  |0c| SUB R1 , R3
+                  |0e| CMP R1 , R2
+                  |10| JN fin
+                  |12| PUSH [ R7 ] , R4
+                  |14| AND R4 , R6
+                  |16| CMP R4 , R2
+                  |18| JZ es_multiplo
+      no_multiplo |1a| POP [ R7 ] , R4
+                  |1c| MOV R5 , R4
+                  |1e| SHL R4 , 3
+                  |20| SUB R4 , R5
+                  |22| ADD R4 , R3
+                  |24| JMP actualizar_numero
+      es_multiplo |26| POP [ R7 ] , R4
+                  |28| SHRA R4 , 1
+                  |2a| SUB R4 , R3
+                  |2c| SUB R4 , R3
+                  |2e| JMP actualizar_numero
+actualizar_numero |30| STR [ R0 ] , R4
+                  |32| ADD R0 , R3
+                  |34| JMP loop
+              fin |36| RET | R7 |
+                p |38| DB 0x01
+                  |39| DB 0x02
+                  |3a| DB 0x04
+                  |3b| DB 0x08
+                  |3c| DB 0x03
+                  |3d| DB 0x03
+                  |3e| DB 0xA1
+                  |3f| DB 0xC0
+                  |40| DB 0xFF
+                  |41| DB 0x40
+                  |42| DB 0x55
+                  |43| DB 0xCC
+                  |44| DB 0xBD
+                  |45| DB 0x45
+                  |46| DB 0x9A
+                  |47| DB 0xEE
